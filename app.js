@@ -1,5 +1,5 @@
 const BASE_URL =
-  //api issue found !
+  //api issue found
   "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies";
 
 const dropdowns = document.querySelectorAll(".dropdown select");
@@ -15,7 +15,7 @@ for (let select of dropdowns) {
     newOption.value = currCode;
     if (select.name == "from" && currCode == "USD") {
       newOption.selected = "selected";
-    } else if (select.name == "to" && currCode == "INR") {
+    } else if (select.name == "to" && currCode == "BDT") {
       newOption.selected = "selected";
     }
 
@@ -37,15 +37,32 @@ const updateFlag = (element) => {
 
 btn.addEventListener("click", async (evt) => {
   evt.preventDefault();
-  let amount = document.querySelector(".amount input");
-  let amountVal = amount.value;
-  if (amountVal == "" || amountVal < 1) {
+
+  const amountInput = document.querySelector(".amount input");
+  let amountVal = parseFloat(amountInput.value);
+
+  if (isNaN(amountVal) || amountVal < 1) {
     amountVal = 1;
-    amount.value = "1";
+    amountInput.value = "1";
   }
 
-  //console.log(fromCurr.value, toCurr.value);
-  const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}/${toCurr.value.toLowerCase()}.json`;
-  let response = await fetch(URL);
-  console.log(response);
+  const API_KEY = "cur_live_dyztzh5CXchrVmKy1tIaWNQHscZyNeuQrP8QdnOW"; // replace with your real key
+  const from = fromCurr.value;
+  const to = toCurr.value;
+  const URL = `https://api.currencyapi.com/v3/latest?apikey=${API_KEY}&base_currency=${from}&currencies=${to}`;
+
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+
+    const rate = data.data[to].value;
+    const finalAmount = (amountVal * rate).toFixed(2);
+    document.querySelector(
+      ".msg"
+    ).innerText = `${amountVal} ${from} = ${finalAmount} ${to}`;
+  } catch (err) {
+    console.error("Conversion error:", err);
+    document.querySelector(".msg").innerText =
+      "❌ Failed to Receive exchange rate.";
+  }
 });
