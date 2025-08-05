@@ -1,5 +1,5 @@
 const BASE_URL =
-  //api issue found
+  //api issue found - solved
   "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies";
 
 const dropdowns = document.querySelectorAll(".dropdown select");
@@ -46,7 +46,7 @@ btn.addEventListener("click", async (evt) => {
     amountInput.value = "1";
   }
 
-  const API_KEY = "cur_live_dyztzh5CXchrVmKy1tIaWNQHscZyNeuQrP8QdnOW"; // replace with your real key
+  const API_KEY = "cur_live_dyztzh5CXchrVmKy1tIaWNQHscZyNeuQrP8QdnOW"; //
   const from = fromCurr.value;
   const to = toCurr.value;
   const URL = `https://api.currencyapi.com/v3/latest?apikey=${API_KEY}&base_currency=${from}&currencies=${to}`;
@@ -64,5 +64,41 @@ btn.addEventListener("click", async (evt) => {
     console.error("Conversion error:", err);
     document.querySelector(".msg").innerText =
       "❌ Failed to Receive exchange rate.";
+  }
+});
+
+//dark mode js logic
+const themeToggle = document.getElementById("themeToggle");
+const icon = themeToggle.querySelector("i");
+
+// Loading the saved theme
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  icon.classList.remove("fa-moon");
+  icon.classList.add("fa-sun");
+}
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  const isDark = document.body.classList.contains("dark");
+  icon.classList.toggle("fa-moon", !isDark);
+  icon.classList.toggle("fa-sun", isDark);
+
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+});
+
+// dark mode popup bar
+window.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("themePopup");
+  const theme = localStorage.getItem("theme");
+
+  if (theme !== "dark") {
+    // Show only if not already in dark mode
+    popup.classList.add("show");
+
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 6000);
   }
 });

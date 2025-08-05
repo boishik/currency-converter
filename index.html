@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Currency Converter</title>
-    <link rel="stylesheet" href="style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -12,38 +17,82 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
+    <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
-    <div class="container">
-      <h2>Currency Coverter</h2>
+    <!--toggle button and modal-->
+    <button id="themeToggle" aria-label="Toggle Dark Mode">
+      <i class="fas fa-moon"></i>
+    </button>
+    <div id="themePopup" class="theme-popup">
+      🌙 Want dark mode? Save your eyes!
+    </div>
+
+    <main class="container" role="main">
+      <h2>Currency Converter</h2>
+
       <form>
         <div class="amount">
-          <p>Enter amount</p>
-          <input value="100" type="text" />
+          <label for="amountInput">Enter Amount</label>
+          <input
+            id="amountInput"
+            type="number"
+            min="1"
+            value="100"
+            aria-label="Enter amount"
+          />
         </div>
-        <div class="dropdown">
+
+        <div class="dropdown" aria-label="Currency selectors">
           <div class="from">
-            <p>From</p>
+            <label for="fromCurrency">From</label>
             <div class="select-container">
-              <img src="https://flagsapi.com/US/flat/64.png" />
-
-              <select name="from" id=""></select>
+              <img
+                src="https://flagsapi.com/US/flat/64.png"
+                alt="From country flag"
+              />
+              <select
+                name="from"
+                id="fromCurrency"
+                aria-label="From currency"
+              ></select>
             </div>
           </div>
-          <i class="fa-solid fa-arrow-right-arrow-left"></i>
-          <div class="to">
-            <p>To</p>
-            <div class="select-container">
-              <img src="https://flagsapi.com/BD/flat/64.png" />
 
-              <select name="to" id=""></select>
+          <i
+            class="fa-solid fa-arrow-right-arrow-left"
+            aria-hidden="true"
+            title="Convert to"
+          ></i>
+
+          <div class="to">
+            <label for="toCurrency">To</label>
+            <div class="select-container">
+              <img
+                src="https://flagsapi.com/BD/flat/64.png"
+                alt="To country flag"
+              />
+              <select
+                name="to"
+                id="toCurrency"
+                aria-label="To currency"
+              ></select>
             </div>
           </div>
         </div>
-        <div class="msg">1 USD = 122.60 BDT</div>
-        <button>Get Exchange Rate</button>
+
+        <div class="msg" role="status" aria-live="polite">
+          1 USD = 122.60 BDT
+        </div>
+
+        <button type="submit" aria-label="Get exchange rate">
+          Get Exchange Rate
+        </button>
       </form>
-    </div>
+    </main>
+
     <script src="codes.js"></script>
     <script src="app.js"></script>
   </body>
